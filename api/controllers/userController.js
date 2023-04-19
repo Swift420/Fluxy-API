@@ -5,7 +5,9 @@ export const getAllUsers = async(req,res,next)=> {
     try {
         users = await User.find()
     } catch (error) {
-        console.log(error)
+        return res.status(404).json({
+            message: error
+        })
     }
 
     if(!users) {
@@ -48,9 +50,6 @@ export const signUp = async(req,res,next) => {
          
         existingUser = await User.findOne({email})
 
-        console.log(existingUser)
-       // res.status(200).json(user)
-
     } catch (error) {
         return res.status(500).json({ error: 'Server error' });
     }
@@ -77,6 +76,5 @@ export const signUp = async(req,res,next) => {
         }
         
             return res.status(200).json({user});
-
 
 }
