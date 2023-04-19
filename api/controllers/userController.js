@@ -1,5 +1,5 @@
 import User from "../models/User";
-
+import bcrypt from 'bcrypt'
 export const getAllUsers = async(req,res,next)=> {
     let users;
     try {
@@ -59,14 +59,15 @@ export const signUp = async(req,res,next) => {
             return res.status(500).json({ error: 'User Already Exists' });
         } 
 
+       const hashedPassword = bcrypt.hashSync(password, 10) 
         const user = new User({
         name,
        
         email,
-         password
+        password:hashedPassword
         });
 
-        console.log(user)
+       
 
         try {
             await user.save()
@@ -76,5 +77,39 @@ export const signUp = async(req,res,next) => {
         }
         
             return res.status(200).json({user});
+
+}
+
+
+export const login = async(req,res,next) => {
+
+        const { email, password}  = req.body;
+
+    let existingUser 
+    try {
+         
+        existingUser = await User.findOne({email})
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+
+
+        if(!existingUser) {
+
+
+            return res.status(500).json({ error: 'Could not find user with this Email' });
+        } 
+
+
+        const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password)
+
+
+        if(!isPasswordCorrect) {
+            return res.status(500).json({ error: "Incorrect login Details" });
+
+        }
+            return res.status(200).json({ message: "Login Successful" });
+
 
 }
