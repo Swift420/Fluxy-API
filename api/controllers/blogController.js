@@ -82,11 +82,18 @@ export const updateBlog = async(req,res,next) => {
 
 export const deleteBlog = async (req, res,next) => {
     const {id}  = req.params
-    
+    let blog
     try {
-       Blog.findByIdAndDelete(id)
+       blog = await Blog.findByIdAndDelete(id)
         
     } catch (error) {
+        res.staus(400).json({error: error})
         
     }
+
+    if(!blog){
+        res.status(400).json({message: "Blog was not deleted"})
+    }
+
+    res.status(200).json({message: "Blog was successfully deleted"})
 }
