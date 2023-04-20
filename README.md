@@ -9,7 +9,7 @@ The API is built using Node.js, Express, and MongoDB. It follows RESTful princip
 
 2. Install the dependencies
 ``` Javascript
-cd social-media-api
+cd api
 npm install
 ```
 3. Start the server:
