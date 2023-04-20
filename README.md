@@ -37,9 +37,9 @@ npm start
 
 ```JSON
 { 
-"name": string, 
-"email": string,
-"password": string,
+"name": "string", 
+"email": "string",
+"password": "string",
 "blogs": []
 }
 ```
@@ -47,10 +47,10 @@ npm start
 
 ``` JSON
 {
-  "id": string,
-  "title": string,
-  "description": string,
-  "image": string
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "image": "string"
   "userId": User
 }
 
